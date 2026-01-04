@@ -1,7 +1,7 @@
 [project]
 name = "strip-bom"
 version = "1.0.0"
-description = "Strip UTF-8 byte order mark (BOM) from strings, bytes, and streams. Equivalent to the Node.js strip-bom packages."
+description = "Strip UTF-8 byte order mark (BOM) from strings, bytes, streams, and files. Inspired by the popular strip-bom npm package"
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [

@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Python 3.8+ compatibility
 
 ### Features
-- Fast and reliable BOM stripping for strings, bytes, and streams
+- Fast and reliable BOM stripping for strings, bytes, streams, and files
 - Equivalent functionality to Node.js strip-bom packages
 - Validates UTF-8 encoding before stripping BOM from buffers
 - Handles large files and streams efficiently

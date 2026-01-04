@@ -1,11 +1,3 @@
-"""
-Strip UTF-8 byte order mark (BOM) from strings, bytes, and streams.
-
-This module provides three functions equivalent to the Node.js packages:
-- strip-bom: Strip BOM from strings
-- strip-bom-buf: Strip BOM from byte arrays (only if valid UTF-8)
-- strip-bom-stream: Strip BOM from streams/file-like objects
-"""
 from typing import Union, BinaryIO, Iterator
 
 # UTF-8 BOM bytes: 0xEF 0xBB 0xBF

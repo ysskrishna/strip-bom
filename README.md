@@ -4,11 +4,11 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/ysskrishna/strip-bom/blob/main/LICENSE)
 ![Tests](https://github.com/ysskrishna/strip-bom/actions/workflows/test.yml/badge.svg)
 
-Strip UTF-8 byte order mark (BOM) from strings, bytes, and streams. Equivalent to the Node.js [strip-bom](https://github.com/sindresorhus/strip-bom), [strip-bom-buf](https://github.com/sindresorhus/strip-bom-buf), and [strip-bom-stream](https://github.com/sindresorhus/strip-bom-stream) packages.
+Strip UTF-8 byte order mark (BOM) from strings, bytes, streams, and files. Inspired by the popular [strip-bom](https://github.com/sindresorhus/strip-bom) npm package.
 
 ## Features
 
-- Strip BOM from strings, bytes, bytearrays, and streams
+- Strip BOM from strings, bytes, bytearrays, streams, and files
 - Validates UTF-8 encoding before stripping BOM from buffers
 - Handles large files and streams efficiently
 - Zero dependencies, minimal overhead
@@ -20,12 +20,6 @@ Strip UTF-8 byte order mark (BOM) from strings, bytes, and streams. Equivalent t
 
 ```bash
 pip install strip-bom
-```
-
-Or using `uv`:
-
-```bash
-uv add strip-bom
 ```
 
 ## Usage
@@ -85,54 +79,9 @@ content = strip_bom_file('file.txt', 'rb')
 print(content)
 ```
 
-## API Reference
-
-### `strip_bom(string: str) -> str`
-
-Strip UTF-8 BOM from a string.
-
-- **Parameters:**
-  - `string`: Input string that may contain a BOM
-- **Returns:** String with BOM removed if present, otherwise the original string
-- **Raises:** `TypeError` if input is not a string
-
-### `strip_bom_buffer(byte_array: Union[bytes, bytearray]) -> bytes`
-
-Strip UTF-8 BOM from bytes or bytearray. Only strips BOM if the buffer is valid UTF-8 encoded.
-
-- **Parameters:**
-  - `byte_array`: Input bytes that may contain a UTF-8 BOM (0xEF 0xBB 0xBF)
-- **Returns:** Bytes with BOM removed if present and valid UTF-8, otherwise the original bytes
-- **Raises:** `TypeError` if input is not bytes or bytearray
-
-### `strip_bom_stream(file_like: BinaryIO, chunk_size: int = 8192) -> Iterator[bytes]`
-
-Strip UTF-8 BOM from a stream/file-like object.
-
-- **Parameters:**
-  - `file_like`: File-like object opened in binary mode
-  - `chunk_size`: Size of chunks to read for subsequent reads (default: 8192)
-- **Yields:** Bytes chunks with BOM removed from the first chunk
-- **Raises:** `TypeError` if input is not a file-like object with read() method
-
-### `strip_bom_file(file_path: str, mode: str = 'r') -> Union[str, bytes]`
-
-Convenience function to read a file and strip BOM.
-
-- **Parameters:**
-  - `file_path`: Path to the file
-  - `mode`: File mode ('r' or 'rt' for text, 'rb' for binary)
-- **Returns:** File contents with BOM removed (string if mode='r' or 'rt', bytes if mode='rb')
-- **Raises:**
-  - `ValueError` if mode is not 'r', 'rt', or 'rb'
-  - `FileNotFoundError` if the file does not exist
-
 ## Credits
 
-This package is inspired by the Node.js packages:
-- [strip-bom](https://github.com/sindresorhus/strip-bom) by [Sindre Sorhus](https://github.com/sindresorhus)
-- [strip-bom-buf](https://github.com/sindresorhus/strip-bom-buf) by [Sindre Sorhus](https://github.com/sindresorhus)
-- [strip-bom-stream](https://github.com/sindresorhus/strip-bom-stream) by [Sindre Sorhus](https://github.com/sindresorhus)
+This package is inspired by the [strip-bom](https://github.com/sindresorhus/strip-bom) ([npm](https://www.npmjs.com/package/strip-bom)) npm package by [Sindre Sorhus](https://github.com/sindresorhus).
 
 ## Changelog
 
