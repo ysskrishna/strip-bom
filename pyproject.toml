@@ -1,7 +1,20 @@
 [project]
 name = "strip-bom"
 version = "1.0.0"
-description = "Add your description here"
+description = "Strip UTF-8 byte order mark (BOM) from strings, bytes, and streams. Equivalent to the Node.js strip-bom packages."
 readme = "README.md"
 requires-python = ">=3.8"
+authors = [
+  {name = "Y. Siva Sai Krishna", email = "sivasaikrishnassk@gmail.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+]
 dependencies = []
