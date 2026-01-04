@@ -8,6 +8,11 @@ This module provides three functions equivalent to the Node.js packages:
 """
 from typing import Union, BinaryIO, Iterator
 
+# UTF-8 BOM bytes: 0xEF 0xBB 0xBF
+UTF8_BOM = b'\xef\xbb\xbf'
+# UTF-8 BOM character: U+FEFF
+UTF8_BOM_CHAR = '\ufeff'
+
 
 def strip_bom(string: str) -> str:
     """
@@ -33,7 +38,7 @@ def strip_bom(string: str) -> str:
     
     # Catches EFBBBF (UTF-8 BOM) because when a UTF-8 string with BOM
     # is read, the BOM is represented as the character U+FEFF
-    if string and ord(string[0]) == 0xFEFF:
+    if string and string[0] == UTF8_BOM_CHAR:
         return string[1:]
     
     return string
@@ -84,13 +89,10 @@ def strip_bom_buffer(byte_array: Union[bytes, bytearray]) -> bytes:
         byte_array = bytes(byte_array)
     
     # Check for UTF-8 BOM: 0xEF 0xBB 0xBF
-    if (len(byte_array) >= 3 and
-            byte_array[0] == 0xEF and
-            byte_array[1] == 0xBB and
-            byte_array[2] == 0xBF):
+    if len(byte_array) >= len(UTF8_BOM) and byte_array[:len(UTF8_BOM)] == UTF8_BOM:
         # Only strip if the buffer is actually valid UTF-8
         if _is_utf8(byte_array):
-            return byte_array[3:]
+            return byte_array[len(UTF8_BOM):]
     
     return byte_array
 
@@ -121,8 +123,9 @@ def strip_bom_stream(file_like: BinaryIO, chunk_size: int = 8192) -> Iterator[by
     if not hasattr(file_like, 'read'):
         raise TypeError(f'Expected a file-like object with read() method, got {type(file_like).__name__}')
     
-    # Read first chunk (at least 3 bytes to check for BOM, but read more for UTF-8 validation)
-    first_chunk = file_like.read(max(1024, chunk_size))
+    # Read first chunk (at least enough bytes to check for BOM, but read more for UTF-8 validation)
+    min_read_size = max(len(UTF8_BOM), 1024, chunk_size)
+    first_chunk = file_like.read(min_read_size)
     
     if not first_chunk:
         return
