@@ -51,3 +51,18 @@ class TestStripBomStream:
         
         with pytest.raises(TypeError, match='Expected a file-like object'):
             strip_bom_stream(None)
+
+    def test_strip_bom_stream_with_closed_stream(self):
+        """Test behavior when stream is already closed."""
+        stream = io.BytesIO(b'\xef\xbb\xbfHello')
+        stream.close()
+        with pytest.raises(ValueError):
+            list(strip_bom_stream(stream))
+
+    def test_strip_bom_stream_early_termination(self):
+        """Test that generator can be safely terminated early."""
+        content = b'\xef\xbb\xbf' + b'x' * 10000
+        stream = io.BytesIO(content)
+        gen = strip_bom_stream(stream)
+        first_chunk = next(gen)
+        gen.close()  # Should not raise

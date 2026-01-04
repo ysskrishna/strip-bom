@@ -106,3 +106,9 @@ class TestStripBomFile:
         # Test UTF-8 fixture: BOM should be stripped
         result_utf8 = strip_bom_file(str(utf8_fixture), 'rb')
         assert result_utf8 == b'Unicorn\n'
+
+    def test_strip_bom_file_with_directory_path(self):
+        """Test error handling when path is a directory."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            with pytest.raises(IsADirectoryError):
+                strip_bom_file(tmpdir)
