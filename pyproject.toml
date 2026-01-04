@@ -1,0 +1,7 @@
+[project]
+name = "strip-bom"
+version = "1.0.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
