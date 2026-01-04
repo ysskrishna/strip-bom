@@ -74,3 +74,17 @@ class TestStripBomBuffer:
         content = utf16le_bom + b'H\x00e\x00l\x00l\x00o\x00'
         result = strip_bom_buffer(content)
         assert result == content  # Should be unchanged
+
+    def test_strip_bom_buffer_returns_same_object_without_bom(self):
+        """Verify no unnecessary copying when no BOM present (bytes only)."""
+        data = b'Hello World'
+        result = strip_bom_buffer(data)
+        assert result is data  # Same object, not a copy
+
+    def test_strip_bom_buffer_bytearray_returns_new_object(self):
+        """Verify bytearray always returns a new bytes object."""
+        data = bytearray(b'Hello World')
+        result = strip_bom_buffer(data)
+        assert result is not data  # Always a new object
+        assert isinstance(result, bytes)  # Converted to bytes
+        assert result == b'Hello World'  # Content is correct
