@@ -84,10 +84,10 @@ def strip_bom_buffer(byte_array: Union[bytes, bytearray]) -> bytes:
         byte_array = bytes(byte_array)
     
     # Check for UTF-8 BOM: 0xEF 0xBB 0xBF
-    if len(byte_array) >= 3 and \
-       byte_array[0] == 0xEF and \
-       byte_array[1] == 0xBB and \
-       byte_array[2] == 0xBF:
+    if (len(byte_array) >= 3 and
+            byte_array[0] == 0xEF and
+            byte_array[1] == 0xBB and
+            byte_array[2] == 0xBF):
         # Only strip if the buffer is actually valid UTF-8
         if _is_utf8(byte_array):
             return byte_array[3:]
@@ -148,17 +148,19 @@ def strip_bom_file(file_path: str, mode: str = 'r') -> Union[str, bytes]:
     
     Args:
         file_path: Path to the file
-        mode: File mode ('r' for text, 'rb' for binary)
+        mode: File mode ('r' or 'rt' for text, 'rb' for binary)
         
     Returns:
-        File contents with BOM removed (string if mode='r', bytes if mode='rb')
+        File contents with BOM removed (string if mode='r' or 'rt', bytes if mode='rb')
         
     Raises:
         ValueError: If mode is not 'r', 'rt', or 'rb'
+        FileNotFoundError: If the file does not exist
         
     Example:
         >>> content = strip_bom_file('file.txt', 'r')
         >>> print(content)
+        'unicorn'
     """
     if mode in ('r', 'rt'):
         with open(file_path, 'r', encoding='utf-8') as f:
