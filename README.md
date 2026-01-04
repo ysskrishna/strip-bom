@@ -9,29 +9,26 @@
 
 Strip UTF-8 byte order mark (BOM) from strings, bytes, streams, and files. Inspired by the popular [strip-bom](https://github.com/sindresorhus/strip-bom) npm package.
 
-## Why?
-
-From [Wikipedia](https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8):
-
-> The Unicode Standard permits the BOM in UTF-8, but does not require nor recommend its use. Byte order has no meaning in UTF-8.
-
-While the BOM can help identify UTF-8 encoding in some contexts, it often causes issues when:
-- Processing text files that may or may not have a BOM
-- Comparing strings that differ only by the presence of a BOM
-- Working with APIs or systems that don't expect a BOM
-- Ensuring consistent text processing across different sources
-
-This library provides a simple and efficient way to remove the UTF-8 BOM from various data types, ensuring clean and consistent text processing.
-
 ## Features
 
-- Strip BOM from strings, bytes, bytearrays, streams, and files
-- Validates UTF-8 encoding before stripping BOM from buffers
-- Handles large files and streams efficiently
-- Zero dependencies, minimal overhead
-- Type hints for better IDE support
-- Graceful error handling
-- Supports Unicode characters including emojis and CJK characters
+- **Multiple input types**: Strip BOM from strings, bytes, bytearrays, streams, and files
+- **Smart validation**: Validates UTF-8 encoding before processing buffers
+- **Memory efficient**: Handles large files and streams without loading everything into memory
+- **Zero dependencies**: Lightweight with no external dependencies
+- **Type safe**: Full type hints for excellent IDE support
+- **Robust**: Graceful error handling and Unicode support (emojis, CJK characters, etc.)
+
+## Why Strip BOM?
+
+The [UTF-8 Byte Order Mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8) can cause issues when:
+
+- ❌ Processing files from different sources (some have BOM, others don't)
+- ❌ Comparing strings that should be identical but differ only by BOM
+- ❌ Working with APIs that don't expect BOM characters
+- ❌ Parsing JSON, CSV, or other structured data formats
+
+> **Note**: The [Unicode Standard](https://www.unicode.org/faq/utf_bom#bom5) permits BOM in UTF-8 but doesn't require or recommend it, since byte order is irrelevant for UTF-8.
+
 
 ## Installation
 
@@ -39,9 +36,9 @@ This library provides a simple and efficient way to remove the UTF-8 BOM from va
 pip install strip-bom
 ```
 
-## Usage
+## Usage Examples
 
-### Strip BOM from a string
+### Strings
 
 ```python
 from strip_bom import strip_bom
@@ -49,9 +46,13 @@ from strip_bom import strip_bom
 text_with_bom = '\ufeffunicorn'
 clean_text = strip_bom(text_with_bom)
 print(clean_text)  # 'unicorn'
+
+# Text without BOM remains unchanged
+normal_text = 'Hello World'
+print(strip_bom(normal_text))  # 'Hello World'
 ```
 
-### Strip BOM from bytes
+### Bytes and Buffers
 
 ```python
 from strip_bom import strip_bom_buffer
@@ -59,46 +60,70 @@ from strip_bom import strip_bom_buffer
 bytes_with_bom = b'\xef\xbb\xbfunicorn'
 clean_bytes = strip_bom_buffer(bytes_with_bom)
 print(clean_bytes)  # b'unicorn'
-```
 
-The function only strips BOM if the bytes are valid UTF-8 encoded:
-
-```python
-# Invalid UTF-8 with BOM-like prefix - BOM is NOT stripped
+# Invalid UTF-8 is left unchanged (safety first!)
 invalid_utf8 = b'\xef\xbb\xbf\xff\xfe'
 result = strip_bom_buffer(invalid_utf8)
-print(result == invalid_utf8)  # True (unchanged)
+print(result == invalid_utf8)  # True (no changes made)
 ```
 
-### Strip BOM from a stream
+### Streams (Memory Efficient)
 
 ```python
 from strip_bom import strip_bom_stream
 import io
 
-stream = io.BytesIO(b'\xef\xbb\xbfHello World')
-chunks = list(strip_bom_stream(stream))
-content = b''.join(chunks)
-print(content)  # b'Hello World'
+# Process large streams without loading everything into memory
+stream = io.BytesIO(b'\xef\xbb\xbfLarge file content here...')
+
+# Process in chunks
+for chunk in strip_bom_stream(stream, chunk_size=8192):
+    # Process each chunk as needed
+    print(chunk)
+
+# Or get all content at once
+stream.seek(0)
+content = b''.join(strip_bom_stream(stream))
 ```
 
-### Strip BOM from a file
+### Files
 
 ```python
 from strip_bom import strip_bom_file
 
-# Read file in text mode
-content = strip_bom_file('file.txt', 'r')
-print(content)
+# Text mode (reads as UTF-8)
+content = strip_bom_file('data.txt', mode='r')
+print(f"File content: {content}")
 
-# Read file in binary mode
-content = strip_bom_file('file.txt', 'rb')
-print(content)
+# Binary mode
+binary_content = strip_bom_file('data.txt', mode='rb')
+print(f"Binary content: {binary_content}")
 ```
 
-## Credits
+## API Reference
 
-This package is inspired by the [strip-bom](https://github.com/sindresorhus/strip-bom) ([npm](https://www.npmjs.com/package/strip-bom)) npm package by [Sindre Sorhus](https://github.com/sindresorhus).
+### `strip_bom(text: str) -> str`
+Remove BOM from Unicode string.
+
+### `strip_bom_buffer(buffer: Union[bytes, bytearray]) -> bytes`
+Remove BOM from bytes/bytearray if valid UTF-8.
+
+### `strip_bom_stream(stream: BinaryIO, chunk_size: int = 8192) -> Iterator[bytes]`
+Remove BOM from binary stream, yielding chunks.
+
+### `strip_bom_file(file_path: str, mode: str = 'r') -> Union[str, bytes]`
+Remove BOM from file content. Mode can be `'r'`/`'rt'` for text or `'rb'` for binary.
+
+
+## Learn More
+
+- [W3C: The byte-order mark (BOM) in HTML](https://www.w3.org/International/questions/qa-byte-order-mark)
+- [Unicode FAQ: UTF-8, UTF-16, UTF-32 & BOM](https://www.unicode.org/faq/utf_bom#bom5)
+- [Wikipedia: Byte Order Mark](https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8)
+
+## Acknowledgments
+
+Inspired by [Sindre Sorhus](https://github.com/sindresorhus)'s [strip-bom](https://github.com/sindresorhus/strip-bom) npm package.
 
 ## Changelog
 
@@ -106,24 +131,26 @@ See [CHANGELOG.md](https://github.com/ysskrishna/strip-bom/blob/main/CHANGELOG.m
 
 ## Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](https://github.com/ysskrishna/strip-bom/blob/main/CONTRIBUTING.md) for details on our code of conduct, development setup, and the process for submitting pull requests.
+We welcome contributions! Please see our [Contributing Guide](https://github.com/ysskrishna/strip-bom/blob/main/CONTRIBUTING.md) for details.
 
 ## Support
 
-If you find this library useful, please consider:
+If you find this library helpful:
 
-- ⭐ **Starring** the repository on GitHub to help others discover it.
-- 💖 **Sponsoring** to support ongoing maintenance and development.
-
-[Become a Sponsor on GitHub](https://github.com/sponsors/ysskrishna) | [Support on Patreon](https://patreon.com/ysskrishna)
+- ⭐ Star the repository
+- 🐛 Report issues
+- 🔀 Submit pull requests
+- 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
 
 ## License
 
-MIT License - see [LICENSE](https://github.com/ysskrishna/strip-bom/blob/main/LICENSE) file for details.
+MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) - see [LICENSE](https://github.com/ysskrishna/strip-bom/blob/main/LICENSE) file for details.
 
-## Author
+---
 
-**Y. Siva Sai Krishna**
-
-- GitHub: [@ysskrishna](https://github.com/ysskrishna)
-- LinkedIn: [ysskrishna](https://linkedin.com/in/ysskrishna)
+<p align="left">
+  <a href="https://github.com/ysskrishna">Author's GitHub</a> •
+  <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
+  <a href="https://github.com/ysskrishna/strip-bom/issues">Report Issues</a> •
+  <a href="https://pypi.org/project/strip-bom/">Package on PyPI</a>
+</p>
