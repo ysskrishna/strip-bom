@@ -94,18 +94,20 @@ def strip_bom_stream(file_like: BinaryIO, chunk_size: int = 8192) -> Iterator[by
     Strip UTF-8 byte order mark (BOM) from a stream/file-like object.
     
     Equivalent to the 'strip-bom-stream' Node.js package.
-    Reads the first chunk (at least 3 bytes), checks for BOM, strips it if present
-    and the data is valid UTF-8, then yields all remaining data.
+    Reads the first chunk using chunk_size (at least 3 bytes to check for BOM),
+    checks for BOM, strips it if present and the data is valid UTF-8,
+    then yields all remaining data in chunks of chunk_size.
     
     Args:
         file_like: File-like object opened in binary mode
-        chunk_size: Size of chunks to read for subsequent reads (default: 8192)
+        chunk_size: Size of chunks to read (default: 8192). The first chunk will
+                   be at least this size (or 3 bytes, whichever is larger).
         
     Yields:
         Bytes chunks with BOM removed from the first chunk
         
     Raises:
-        TypeError: If input is not a file-like object with read() method
+        TypeError: If input is not a file-like object
         
     Example:
         >>> with open('file.txt', 'rb') as f:
@@ -113,28 +115,32 @@ def strip_bom_stream(file_like: BinaryIO, chunk_size: int = 8192) -> Iterator[by
         ...         print(chunk)
     """
     if not hasattr(file_like, 'read'):
-        raise TypeError(f'Expected a file-like object with read() method, got {type(file_like).__name__}')
+        raise TypeError(f'Expected a file-like object, got {type(file_like).__name__}')
     
-    # Read first chunk (at least enough bytes to check for BOM, but read more for UTF-8 validation)
-    min_read_size = max(len(UTF8_BOM), 1024, chunk_size)
-    first_chunk = file_like.read(min_read_size)
+    # Generator function that processes the stream
+    def _strip_bom_stream_generator():
+        # Read first chunk (at least enough bytes to check for BOM, use chunk_size for consistency)
+        min_read_size = max(len(UTF8_BOM), chunk_size)
+        first_chunk = file_like.read(min_read_size)
+        
+        if not first_chunk:
+            return
+        
+        # Process first chunk with strip_bom_buffer to handle BOM removal
+        processed_first = strip_bom_buffer(first_chunk)
+        
+        # Yield processed first chunk (BOM removed if it was present)
+        if processed_first:
+            yield processed_first
+        
+        # Yield the rest of the file in chunks
+        while True:
+            chunk = file_like.read(chunk_size)
+            if not chunk:
+                break
+            yield chunk
     
-    if not first_chunk:
-        return
-    
-    # Process first chunk with strip_bom_buffer to handle BOM removal
-    processed_first = strip_bom_buffer(first_chunk)
-    
-    # Yield processed first chunk (BOM removed if it was present)
-    if processed_first:
-        yield processed_first
-    
-    # Yield the rest of the file in chunks
-    while True:
-        chunk = file_like.read(chunk_size)
-        if not chunk:
-            break
-        yield chunk
+    return _strip_bom_stream_generator()
 
 
 def strip_bom_file(file_path: str, mode: str = 'r') -> Union[str, bytes]:
