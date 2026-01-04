@@ -60,3 +60,17 @@ class TestStripBomBuffer:
         invalid = b'\xef\xbb\xbf\x80\x81\x82'
         result = strip_bom_buffer(invalid)
         assert result == invalid
+
+    def test_strip_bom_buffer_preserves_utf16be_bom(self):
+        """UTF-16BE BOM (0xFE 0xFF) should NOT be stripped by UTF-8 BOM stripper."""
+        utf16be_bom = b'\xfe\xff'
+        content = utf16be_bom + b'\x00H\x00e\x00l\x00l\x00o'
+        result = strip_bom_buffer(content)
+        assert result == content  # Should be unchanged
+
+    def test_strip_bom_buffer_preserves_utf16le_bom(self):
+        """UTF-16LE BOM (0xFF 0xFE) should NOT be stripped by UTF-8 BOM stripper."""
+        utf16le_bom = b'\xff\xfe'
+        content = utf16le_bom + b'H\x00e\x00l\x00l\x00o\x00'
+        result = strip_bom_buffer(content)
+        assert result == content  # Should be unchanged

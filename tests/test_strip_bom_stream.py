@@ -34,22 +34,12 @@ class TestStripBomStream:
         result = b''.join(chunks)
         assert result == b''
 
-    def test_strip_bom_from_large_stream(self):
-        """Test stream with large content."""
-        content = b'\xef\xbb\xbf' + b'x' * 10000
+    def test_strip_bom_stream_with_minimal_chunk_size(self):
+        """Test stream with chunk_size=1 (byte-by-byte reading)."""
+        content = b'\xef\xbb\xbfHello'
         stream = io.BytesIO(content)
-        chunks = list(strip_bom_stream(stream))
-        result = b''.join(chunks)
-        assert result == b'x' * 10000
-        assert len(result) == 10000
-
-    def test_strip_bom_stream_with_custom_chunk_size(self):
-        """Test stream with custom chunk size."""
-        content = b'\xef\xbb\xbf' + b'x' * 20000
-        stream = io.BytesIO(content)
-        chunks = list(strip_bom_stream(stream, chunk_size=1024))
-        result = b''.join(chunks)
-        assert result == b'x' * 20000
+        result = b''.join(strip_bom_stream(stream, chunk_size=1))
+        assert result == b'Hello'
 
     def test_strip_bom_raises_type_error_for_non_file_like(self):
         """Test that non-file-like input raises TypeError."""
