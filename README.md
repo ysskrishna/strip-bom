@@ -1,10 +1,27 @@
 # Strip BOM
 
+
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/ysskrishna/strip-bom/blob/main/LICENSE)
 ![Tests](https://github.com/ysskrishna/strip-bom/actions/workflows/test.yml/badge.svg)
+[![PyPI](https://img.shields.io/pypi/v/strip-bom)](https://pypi.org/project/strip-bom/)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/strip-bom?period=total&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=downloads)](https://pepy.tech/projects/strip-bom)
 
 Strip UTF-8 byte order mark (BOM) from strings, bytes, streams, and files. Inspired by the popular [strip-bom](https://github.com/sindresorhus/strip-bom) npm package.
+
+## Why?
+
+From [Wikipedia](https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8):
+
+> The Unicode Standard permits the BOM in UTF-8, but does not require nor recommend its use. Byte order has no meaning in UTF-8.
+
+While the BOM can help identify UTF-8 encoding in some contexts, it often causes issues when:
+- Processing text files that may or may not have a BOM
+- Comparing strings that differ only by the presence of a BOM
+- Working with APIs or systems that don't expect a BOM
+- Ensuring consistent text processing across different sources
+
+This library provides a simple and efficient way to remove the UTF-8 BOM from various data types, ensuring clean and consistent text processing.
 
 ## Features
 
