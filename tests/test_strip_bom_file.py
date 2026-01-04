@@ -97,8 +97,7 @@ class TestStripBomFile:
     def test_strip_bom_file_with_utf8_fixture(self):
         """Test with UTF-8 fixture file containing BOM.
         
-        Uses the same fixture file as the Node.js reference implementation.
-        Fixture file should be located in tests/fixtures/ directory.
+        Fixture file is located at tests/fixtures/fixture-utf8.
         """
         fixtures_dir = Path(__file__).parent / 'fixtures'
         utf8_fixture = fixtures_dir / 'fixture-utf8'

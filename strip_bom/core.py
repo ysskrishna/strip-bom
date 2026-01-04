@@ -10,8 +10,6 @@ def strip_bom(string: str) -> str:
     """
     Strip UTF-8 byte order mark (BOM) from a string.
     
-    Equivalent to the 'strip-bom' Node.js package.
-    
     Args:
         string: Input string that may contain a BOM
         
@@ -57,7 +55,6 @@ def strip_bom_buffer(byte_array: Union[bytes, bytearray]) -> bytes:
     """
     Strip UTF-8 byte order mark (BOM) from a byte array.
     
-    Equivalent to the 'strip-bom-buf' Node.js package.
     Only strips the BOM if the buffer is actually valid UTF-8 encoded.
     
     Args:
@@ -93,7 +90,6 @@ def strip_bom_stream(file_like: BinaryIO, chunk_size: int = 8192) -> Iterator[by
     """
     Strip UTF-8 byte order mark (BOM) from a stream/file-like object.
     
-    Equivalent to the 'strip-bom-stream' Node.js package.
     Reads the first chunk using chunk_size (at least 3 bytes to check for BOM),
     checks for BOM, strips it if present and the data is valid UTF-8,
     then yields all remaining data in chunks of chunk_size.

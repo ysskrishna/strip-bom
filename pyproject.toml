@@ -37,7 +37,6 @@ keywords = [
     "strip-bom",
     "strip-bom-buf",
     "strip-bom-stream",
-    "nodejs",
     "mit license",
     "ysskrishna",
 ]
