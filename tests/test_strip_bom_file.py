@@ -93,3 +93,16 @@ class TestStripBomFile:
             assert result == ''
         finally:
             Path(temp_path).unlink()
+
+    def test_strip_bom_file_with_utf8_fixture(self):
+        """Test with UTF-8 fixture file containing BOM.
+        
+        Uses the same fixture file as the Node.js reference implementation.
+        Fixture file should be located in tests/fixtures/ directory.
+        """
+        fixtures_dir = Path(__file__).parent / 'fixtures'
+        utf8_fixture = fixtures_dir / 'fixture-utf8'
+        
+        # Test UTF-8 fixture: BOM should be stripped
+        result_utf8 = strip_bom_file(str(utf8_fixture), 'rb')
+        assert result_utf8 == b'Unicorn\n'
