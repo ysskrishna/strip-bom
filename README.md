@@ -102,17 +102,12 @@ print(f"Binary content: {binary_content}")
 
 ## API Reference
 
-### `strip_bom(text: str) -> str`
-Remove BOM from Unicode string.
-
-### `strip_bom_buffer(buffer: Union[bytes, bytearray]) -> bytes`
-Remove BOM from bytes/bytearray if valid UTF-8.
-
-### `strip_bom_stream(stream: BinaryIO, chunk_size: int = 8192) -> Iterator[bytes]`
-Remove BOM from binary stream, yielding chunks.
-
-### `strip_bom_file(file_path: str, mode: str = 'r') -> Union[str, bytes]`
-Remove BOM from file content. Mode can be `'r'`/`'rt'` for text or `'rb'` for binary.
+| Function | Description |
+|----------|-------------|
+| `strip_bom(text: str) -> str` | Remove BOM from Unicode string. |
+| `strip_bom_buffer(buffer: Union[bytes, bytearray]) -> bytes` | Remove BOM from bytes/bytearray if valid UTF-8. |
+| `strip_bom_stream(stream: BinaryIO, chunk_size: int = 8192) -> Iterator[bytes]` | Remove BOM from binary stream, yielding chunks. |
+| `strip_bom_file(file_path: str, mode: str = 'r') -> Union[str, bytes]` | Remove BOM from file content. Mode can be `'r'`/`'rt'` for text or `'rb'` for binary. |
 
 
 ## Learn More
