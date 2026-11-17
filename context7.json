@@ -1,0 +1,29 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "strip-bom",
+  "description": "Zero-dependency Python library to strip the UTF-8 byte order mark (BOM) from strings, bytes, binary streams and files. Python port of the strip-bom npm package.",
+  "excludeFolders": [
+    "archive",
+    "archived",
+    "old",
+    "deprecated",
+    "legacy",
+    "tests",
+    ".github"
+  ],
+  "excludeFiles": [
+    "CHANGELOG.md",
+    "changelog.md",
+    "LICENSE.md",
+    "license.md",
+    "CODE_OF_CONDUCT.md",
+    "NEWS.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "AGENTS.md"
+  ],
+  "rules": [
+    "Import from strip_bom: strip_bom (str), strip_bom_buffer (bytes), strip_bom_stream (binary file object), strip_bom_file (path).",
+    "strip_bom_buffer only removes the BOM when the bytes are valid UTF-8; strip_bom raises TypeError for bytes input."
+  ]
+}
