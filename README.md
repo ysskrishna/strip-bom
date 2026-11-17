@@ -6,6 +6,8 @@
 ![Tests](https://github.com/ysskrishna/strip-bom/actions/workflows/test.yml/badge.svg)
 [![PyPI](https://img.shields.io/pypi/v/strip-bom)](https://pypi.org/project/strip-bom/)
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/strip-bom?period=total&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=downloads)](https://pepy.tech/projects/strip-bom)
+[![Context7](https://img.shields.io/badge/Context7-docs-18181B)](https://context7.com/ysskrishna/strip-bom)
+[![Ask DeepWiki](https://img.shields.io/badge/DeepWiki-ask-18181B)](https://deepwiki.com/ysskrishna/strip-bom)
 
 Strip UTF-8 byte order mark (BOM) from strings, bytes, streams, and files. Inspired by the popular [strip-bom](https://github.com/sindresorhus/strip-bom) npm package.
 
