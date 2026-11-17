@@ -3,9 +3,10 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/ysskrishna/strip-bom/blob/main/LICENSE)
-![Tests](https://github.com/ysskrishna/strip-bom/actions/workflows/test.yml/badge.svg)
+[![Tests](https://github.com/ysskrishna/strip-bom/actions/workflows/test.yml/badge.svg)](https://github.com/ysskrishna/strip-bom/actions/workflows/test.yml)
 [![PyPI](https://img.shields.io/pypi/v/strip-bom)](https://pypi.org/project/strip-bom/)
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/strip-bom?period=total&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=downloads)](https://pepy.tech/projects/strip-bom)
+[![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
 [![Context7](https://img.shields.io/badge/Context7-docs-18181B)](https://context7.com/ysskrishna/strip-bom)
 [![Ask DeepWiki](https://img.shields.io/badge/DeepWiki-ask-18181B)](https://deepwiki.com/ysskrishna/strip-bom)
 
@@ -29,7 +30,7 @@ The [UTF-8 Byte Order Mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark#
 - ❌ Working with APIs that don't expect BOM characters
 - ❌ Parsing JSON, CSV, or other structured data formats
 
-> **Note**: The [Unicode Standard](https://www.unicode.org/faq/utf_bom#bom5) permits BOM in UTF-8 but doesn't require or recommend it, since byte order is irrelevant for UTF-8.
+> **Note**: The [Unicode Standard](https://www.unicode.org/faq/utf_bom.html#bom5) permits BOM in UTF-8 but doesn't require or recommend it, since byte order is irrelevant for UTF-8.
 
 
 ## Installation
@@ -115,39 +116,48 @@ print(f"Binary content: {binary_content}")
 ## Learn More
 
 - [W3C: The byte-order mark (BOM) in HTML](https://www.w3.org/International/questions/qa-byte-order-mark)
-- [Unicode FAQ: UTF-8, UTF-16, UTF-32 & BOM](https://www.unicode.org/faq/utf_bom#bom5)
+- [Unicode FAQ: UTF-8, UTF-16, UTF-32 & BOM](https://www.unicode.org/faq/utf_bom.html#bom5)
 - [Wikipedia: Byte Order Mark](https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8)
 
 ## Acknowledgments
 
 Inspired by [Sindre Sorhus](https://github.com/sindresorhus)'s [strip-bom](https://github.com/sindresorhus/strip-bom) npm package.
 
-## Changelog
-
-See [CHANGELOG.md](https://github.com/ysskrishna/strip-bom/blob/main/CHANGELOG.md) for a detailed list of changes and version history.
-
 ## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](https://github.com/ysskrishna/strip-bom/blob/main/CONTRIBUTING.md) for details.
+
+## Built and maintained by
+
+Strip BOM is built and maintained by:
+
+| | Name | GitHub | Role |
+|---|------|--------|------|
+| <img src="https://github.com/ysskrishna.png?size=120" width="60" height="60" alt="Y. Siva Sai Krishna"> | **Y. Siva Sai Krishna** | [@ysskrishna](https://github.com/ysskrishna) | Creator |
+
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md) for release history.
 
 ## Support
 
 If you find this library helpful:
 
 - ⭐ Star the repository
-- 🐛 Report issues
+- 🐛 [Report issues](https://github.com/ysskrishna/strip-bom/issues)
 - 🔀 Submit pull requests
 - 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
 
 ## License
 
-MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) - see [LICENSE](https://github.com/ysskrishna/strip-bom/blob/main/LICENSE) file for details.
+MIT © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="left">
   <a href="https://github.com/ysskrishna">Author's GitHub</a> •
   <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
-  <a href="https://github.com/ysskrishna/strip-bom/issues">Report Issues</a> •
-  <a href="https://pypi.org/project/strip-bom/">Package on PyPI</a>
+  <a href="https://ysskrishna.space">Author's site</a> •
+  <a href="https://pypi.org/project/strip-bom/">Package on PyPI</a> •
+  <a href="https://github.com/ysskrishna/strip-bom/issues">Report Issues</a>
 </p>
